@@ -1,0 +1,89 @@
+/*!
+ * Start Bootstrap - One Page Wonder (http://startbootstrap.com/template-overviews/one-page-wonder)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-one-page-wonder/blob/master/LICENSE)
+ */
+
+body {
+    padding-top: 54px;
+}
+
+@media (min-width: 992px) {
+    body {
+        padding-top: 56px;
+    }
+}
+
+h1{
+    word-wrap: break-word;
+}
+
+header.masthead {
+    background: url('https://unsplash.it/1900/1080?image=304') no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+header.masthead > .overlay {
+    padding: 5rem 0;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 992px) {
+    header.masthead > .overlay {
+        padding: 10rem 0;
+    }
+}
+
+h2 > a {
+    color: #212529;
+    transition: color 200ms 0s;
+}
+
+h2 > a:hover {
+    text-decoration: none;
+}
+
+/* HOME */
+#home .img-fluid.rounded-circle {
+    opacity: 0.8;
+    transition: opacity 400ms 0s;
+}
+#home .row:hover .img-fluid.rounded-circle {
+    opacity: 1;
+}
+
+/* PAGE DETAIL */
+#detail header.masthead {
+    background: url('../src/img/lecaire_01.jpg') no-repeat center center scroll;
+}
+
+#detail .figure-caption{
+    font-size: 100%;
+}
+
+/* MOBILE */
+@media (max-width: 450px) {
+    .display-1 {
+        font-size: 4rem;
+        margin-bottom: 2rem;
+    }
+    .display-4 {
+        font-size: 2rem;
+    }
+    .p-5 {
+        padding: 2rem !important;
+    }
+    .order-2 {
+        order: 1;
+    }
+    #detail .figure-caption {
+        font-size: 90%;
+    }
+    #home .img-fluid.rounded-circle {
+        opacity: 1;
+    }
+}
