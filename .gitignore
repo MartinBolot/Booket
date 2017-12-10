@@ -1,2 +1,19 @@
+
+# node
 node_modules
+
+# images
 src/img
+
+# wordpress source files
+wordpress/wp-*.*
+wordpress/wp-admin/
+wordpress/wp-includes/
+wordpress/*.php
+/*.php
+wordpress/wp-content/*
+!wordpress/wp-content/themes
+wordpress/wp-content/themes/twenty*/*
+wordpress/wp-content/themes/*.php
+.htaccess
+wordpress/.htaccess
