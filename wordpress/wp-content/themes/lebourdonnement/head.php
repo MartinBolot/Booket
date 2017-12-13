@@ -19,5 +19,16 @@
             <!-- Custom styles for this template -->
             <link href="' . $templateURI . '/css/one-page-wonder.css" rel="stylesheet">'
         );
+
+        if (!is_home() && !is_front_page()){
+            ?>
+                <style>
+                    #detail header.masthead {
+                        background: url(<?php get_the_post_thumbnail_url('full'); ?>) no-repeat center center scroll
+                    }
+                </style>
+            <?php
+        }
     ?>
+
   </head>

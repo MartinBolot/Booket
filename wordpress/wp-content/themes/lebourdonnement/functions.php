@@ -10,6 +10,8 @@ add_theme_support( 'post-formats', array(
    'aside', 'image', 'video', 'quote', 'link', 'gallery', 'status', 'audio', 'chat'
 ) );
 
+add_theme_support('post-thumbnails');
+
 
 /* Redéfinition Walker menu */
 class Walker_custom extends Walker_Nav_Menu {
@@ -112,3 +114,201 @@ class Walker_custom extends Walker_Nav_Menu {
 	}
 
 }
+
+
+function post_thumbnail() {
+   if ( post_password_required() || is_attachment() || ! has_post_thumbnail() ) {
+       return;
+   }
+
+   if ( is_singular() ) :
+   ?>
+
+   <div class="post-thumbnail">
+       <?php the_post_thumbnail(); ?>
+   </div><!-- .post-thumbnail -->
+
+   <?php else : ?>
+   <?php
+       the_post_thumbnail(
+           'post-thumbnail',
+           array(
+               'alt' => get_the_title(),
+               'class' => 'img-fluid rounded-circle'
+           )
+        );
+   ?>
+
+   <?php endif; // End is_singular()
+}
+
+function get_link_url() {
+	$has_url = get_url_in_content( get_the_content() );
+
+	return $has_url ? $has_url : apply_filters( 'the_permalink', get_permalink() );
+}
+
+
+function entry_meta() {
+   if ( is_sticky() && is_home() && ! is_paged() ) {
+       printf( '<span class="sticky-post">%s</span>', __( 'Featured', 'lebourdonnement' ) );
+   }
+
+   $format = get_post_format();
+   if ( current_theme_supports( 'post-formats', $format ) ) {
+       printf( '<span class="entry-format">%1$s<a href="%2$s">%3$s</a></span>',
+           sprintf( '<span class="screen-reader-text">%s </span>', _x( 'Format', 'Used before post format.', 'lebourdonnement' ) ),
+           esc_url( get_post_format_link( $format ) ),
+           get_post_format_string( $format )
+       );
+   }
+
+   /*
+   if ( in_array( get_post_type(), array( 'post', 'attachment' ) ) ) {
+       $time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
+
+       if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
+           $time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
+       }
+
+       $time_string = sprintf( $time_string,
+           esc_attr( get_the_date( 'c' ) ),
+           get_the_date(),
+           esc_attr( get_the_modified_date( 'c' ) ),
+           get_the_modified_date()
+       );
+
+       printf( '<span class="posted-on"><span class="screen-reader-text">%1$s </span><a href="%2$s" rel="bookmark">%3$s</a></span>',
+           _x( 'Posté le', 'Used before publish date.', 'lebourdonnement' ),
+           esc_url( get_permalink() ),
+           $time_string
+       );
+   }
+   */
+
+   if ( 'post' == get_post_type() ) {
+       if ( is_singular() || is_multi_author() ) {
+           printf( '<span class="byline"><span class="author vcard"><span class="screen-reader-text">%1$s </span><a class="url fn n" href="%2$s">%3$s</a></span></span>',
+               _x( 'Author', 'Used before post author name.', 'lebourdonnement' ),
+               esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
+               get_the_author()
+           );
+       }
+
+       $categories_list = get_the_category_list( _x( ', ', 'Used between list items, there is a space after the comma.', 'lebourdonnement' ) );
+       if ( $categories_list && categorized_blog() ) {
+           printf( '<span class="cat-links"><span class="screen-reader-text">%1$s </span>%2$s</span>',
+               _x( 'Categories', 'Used before category names.', 'lebourdonnement' ),
+               $categories_list
+           );
+       }
+
+       $tags_list = get_the_tag_list( '', _x( ', ', 'Used between list items, there is a space after the comma.', 'lebourdonnement' ) );
+       if ( $tags_list && ! is_wp_error( $tags_list ) ) {
+           printf( '<span class="tags-links"><span class="screen-reader-text">%1$s </span>%2$s</span>',
+               _x( 'Tags', 'Used before tag names.', 'lebourdonnement' ),
+               $tags_list
+           );
+       }
+   }
+
+   if ( is_attachment() && wp_attachment_is_image() ) {
+       // Retrieve attachment metadata.
+       $metadata = wp_get_attachment_metadata();
+
+       printf( '<span class="full-size-link"><span class="screen-reader-text">%1$s </span><a href="%2$s">%3$s &times; %4$s</a></span>',
+           _x( 'Full size', 'Used before full size attachment link.', 'lebourdonnement' ),
+           esc_url( wp_get_attachment_url() ),
+           $metadata['width'],
+           $metadata['height']
+       );
+   }
+}
+
+function categorized_blog() {
+	if ( false === ( $all_the_cool_cats = get_transient( 'lebourdonnement_categories' ) ) ) {
+		// Create an array of all the categories that are attached to posts.
+		$all_the_cool_cats = get_categories( array(
+			'fields'     => 'ids',
+			'hide_empty' => 1,
+
+			// We only need to know if there is more than one category.
+			'number'     => 2,
+		) );
+
+		// Count the number of categories that are attached to the posts.
+		$all_the_cool_cats = count( $all_the_cool_cats );
+
+		set_transient( 'lebourdonnement_categories', $all_the_cool_cats );
+	}
+
+	if ( $all_the_cool_cats > 1 || is_preview() ) {
+		// This blog has more than 1 category so lebourdonnement_categorized_blog should return true.
+		return true;
+	} else {
+		// This blog has only 1 category so lebourdonnement_categorized_blog should return false.
+		return false;
+	}
+}
+
+function my_mce_buttons_3( $buttons ) {
+	array_unshift($buttons, 'styleselect');
+	return $buttons;
+}
+add_filter('mce_buttons_3', 'my_mce_buttons_3');
+
+function my_mce_before_init_insert_formats( $init_array ) {
+	$style_formats = array(
+		array(
+			'title' => 'section',
+			'block' => 'section',
+			'classes' => '',
+			'wrapper' => true,
+		),
+		array(
+			'title' => 'row',
+			'block' => 'div',
+			'classes' => 'row',
+			'wrapper' => true,
+		),
+		array(
+			'title' => 'container',
+			'block' => 'div',
+			'classes' => 'container',
+			'wrapper' => true,
+		),
+		array(
+			'title' => 'col-md-12',
+			'block' => 'div',
+			'classes' => 'col-md-12',
+			'wrapper' => true,
+		),
+		array(
+			'title' => 'figcaption',
+			'block' => 'figcaption',
+			'classes' => '',
+			'wrapper' => true,
+		),
+	);
+	$init_array['style_formats'] = json_encode( $style_formats );
+	return $init_array;
+}
+add_filter( 'tiny_mce_before_init', 'my_mce_before_init_insert_formats' );
+
+function my_format_TinyMCE( $in ) {
+
+	return $in;
+}
+add_filter( 'tiny_mce_before_init', 'my_format_TinyMCE' );
+
+function html5_insert_image($html, $id, $caption, $title, $align, $url) {
+    $url = wp_get_attachment_url($id);
+    $html5 = "<figure id='post-$id media-$id' class='align-$align'>";
+    $html5 .= "<img src='$url' alt='$title' />";
+    if ($caption) {
+        $html5 .= "<figcaption class='figure-caption text-center'>$caption</figcaption>";
+    }
+    $html5 .= "</figure>";
+    return $html5;
+}
+add_filter( 'image_send_to_editor', 'html5_insert_image', 10, 9 );
