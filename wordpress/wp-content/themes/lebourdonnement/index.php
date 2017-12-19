@@ -1,5 +1,4 @@
 <?php
-
     $templateURI = get_template_directory_uri();
 ?>
 <!DOCTYPE html>

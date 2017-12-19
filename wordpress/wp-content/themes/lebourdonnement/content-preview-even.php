@@ -4,7 +4,15 @@
 		<div class="row align-items-center">
           <div class="col-md-6 order-1">
             <div class="p-5">
-			  <?php post_thumbnail(); ?>
+			  	<?php
+			  		the_post_thumbnail(
+						//array(500, 500),
+						'wordpress-thumbnail',
+						array(
+							'class' => 'img-fluid rounded-circle wp-post-image'
+						)
+					);
+				?>
             </div>
           </div>
           <div class="col-md-6 order-2">

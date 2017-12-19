@@ -21,10 +21,15 @@
         );
 
         if (!is_home() && !is_front_page()){
+
             ?>
                 <style>
-                    #detail header.masthead {
-                        background: url(<?php get_the_post_thumbnail_url('full'); ?>) no-repeat center center scroll
+                    #home header.masthead, #detail header.masthead {
+                        background: url(
+                            <?php
+                                echo(get_the_post_thumbnail_url());
+                            ?>
+                        ) no-repeat center center scroll;
                     }
                 </style>
             <?php
