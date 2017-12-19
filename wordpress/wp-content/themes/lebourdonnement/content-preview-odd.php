@@ -1,14 +1,15 @@
 <?php ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article class="preview-odd" id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<div class="container">
 		<div class="row align-items-center">
           <div class="col-md-6 order-2">
             <div class="p-5">
 			  	<?php
 			  		the_post_thumbnail(
-						'large',
+						'home-thumbnail',
 						array(
-							'class' => 'img-fluid rounded-circle wp-post-image'
+							//'class' => 'img-fluid rounded-circle wp-post-image'
+							'class' => 'img-fluid'
 						)
 					);
 				?>
