@@ -11,7 +11,11 @@ add_theme_support( 'post-formats', array(
 ) );
 
 add_theme_support('post-thumbnails');
-add_image_size('home-thumbnail', 450, 450, array('left', 'top'));
+
+function add_custom_sizes() {
+    add_image_size('home-thumbnail', 1000, 1000, array('left', 'top'));
+}
+add_action('after_setup_theme','add_custom_sizes');
 
 
 /* Redéfinition Walker menu */
