@@ -1,9 +1,3 @@
-/*!
- * Start Bootstrap - One Page Wonder (http://startbootstrap.com/template-overviews/one-page-wonder)
- * Copyright 2013-2017 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-one-page-wonder/blob/master/LICENSE)
- */
-
 body {
     padding-top: 54px;
 }
@@ -53,12 +47,22 @@ h2 > a:hover {
 }
 
 /* HOME */
-#home .img-fluid.rounded-circle {
+#home article img {
+    max-width: none;
     opacity: 0.8;
     transition: opacity 400ms 0s;
 }
-#home .row:hover .img-fluid.rounded-circle {
+
+#home article .row:hover img {
     opacity: 1;
+}
+
+#home .preview-odd .order-2 .p-5, #home .preview-even .order-1 .p-5{
+    border-radius: 50%;
+    height: 450px;
+    overflow: hidden;
+    padding: 0 !important;
+    width: 450px;
 }
 
 /* PAGE DETAIL */

@@ -11,7 +11,7 @@ add_theme_support( 'post-formats', array(
 ) );
 
 add_theme_support('post-thumbnails');
-add_image_size( 'wordpress-thumbnail', 500, 500, TRUE );
+add_image_size('home-thumbnail', 450, 450, array('left', 'top'));
 
 
 /* Redéfinition Walker menu */
@@ -135,7 +135,8 @@ function post_thumbnail() {
            'post-thumbnail',
            array(
                'alt' => get_the_title(),
-               'class' => 'img-fluid rounded-circle'
+               //'class' => 'img-fluid rounded-circle'
+               'class' => 'img-fluid'
            )
         );
    ?>
