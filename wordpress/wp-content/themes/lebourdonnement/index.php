@@ -1,5 +1,6 @@
 <?php
     $templateURI = get_template_directory_uri();
+    $isHomePage = is_home() && is_front_page();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -7,7 +8,7 @@
     <?php get_template_part('head', 'none'); ?>
 
 
-  <body id="home">
+  <body <?php echo('id="'.( $isHomePage ? 'home' : 'page').'"') ?>>
 
     <!-- Navigation -->
     <?php get_template_part('navigation', 'none'); ?>
@@ -24,7 +25,7 @@
         <?php endif; ?>
 
         <?php
-            if ( is_home() && is_front_page()){
+            if ($isHomePage){
                 $i = 0;
                 while (have_posts()) : the_post();
                     $i++;

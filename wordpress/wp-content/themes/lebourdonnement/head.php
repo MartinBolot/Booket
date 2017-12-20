@@ -20,11 +20,11 @@
             <link href="' . $templateURI . '/css/one-page-wonder.css" rel="stylesheet">'
         );
 
-        if (!is_home() && !is_front_page()){
+        if (!is_home() && have_posts()){
 
             ?>
                 <style>
-                    #home header.masthead, #detail header.masthead {
+                    #page header.masthead, #detail header.masthead {
                         background: url(
                             <?php
                                 echo(get_the_post_thumbnail_url());
