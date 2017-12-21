@@ -20,16 +20,16 @@
             <link href="' . $templateURI . '/css/one-page-wonder.css" rel="stylesheet">'
         );
 
-        if (!is_home() && have_posts()){
+        if (!is_home() && is_single()){
 
             ?>
                 <style>
                     #page header.masthead, #detail header.masthead {
-                        background: url(
+                        background-image: url(
                             <?php
                                 echo(get_the_post_thumbnail_url());
                             ?>
-                        ) no-repeat center center scroll;
+                        );
                     }
                 </style>
             <?php
