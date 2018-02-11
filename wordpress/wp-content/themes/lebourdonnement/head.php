@@ -1,5 +1,7 @@
 <?php
     $templateURI = get_template_directory_uri();
+    $siteTitle = get_bloginfo("name");
+    $backgroundImageUrl = "";
 ?>
 
   <head>
@@ -9,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Le bourdonnement médiatique</title>
+    <title><?php echo($siteTitle) ?></title>
 
     <?php
         echo(
@@ -20,19 +22,19 @@
             <link href="' . $templateURI . '/css/one-page-wonder.css" rel="stylesheet">'
         );
 
-        if (!is_home() && is_single()){
-
-            ?>
-                <style>
-                    #page header.masthead, #detail header.masthead {
-                        background-image: url(
-                            <?php
-                                echo(get_the_post_thumbnail_url());
-                            ?>
-                        );
-                    }
-                </style>
-            <?php
+        if (!is_home()){
+            $backgroundImageUrl = get_the_post_thumbnail_url();
+            if($backgroundImageUrl) {
+                ?>
+                    <style>
+                        #page header.masthead, #detail header.masthead {
+                            background-image: url(
+                                <?php echo($backgroundImageUrl); ?>
+                            );
+                        }
+                    </style>
+                <?php
+            }
         }
     ?>
 

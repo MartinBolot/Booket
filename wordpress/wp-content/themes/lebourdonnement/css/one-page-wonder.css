@@ -53,7 +53,7 @@ h2 > a:hover {
 
 #home article img {
     max-width: none;
-    opacity: 0.8;
+    opacity: 0.9;
     transition: opacity 400ms 0s;
 }
 
@@ -76,6 +76,15 @@ h2 > a:hover {
 
 #detail .figure-caption{
     font-size: 100%;
+}
+
+.chapo{
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+article {
+    padding: 20px 0;
 }
 
 /* MOBILE */
