@@ -169,29 +169,6 @@ function entry_meta() {
        );
    }
 
-   /*
-   if ( in_array( get_post_type(), array( 'post', 'attachment' ) ) ) {
-       $time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-
-       if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
-           $time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
-       }
-
-       $time_string = sprintf( $time_string,
-           esc_attr( get_the_date( 'c' ) ),
-           get_the_date(),
-           esc_attr( get_the_modified_date( 'c' ) ),
-           get_the_modified_date()
-       );
-
-       printf( '<span class="posted-on"><span class="screen-reader-text">%1$s </span><a href="%2$s" rel="bookmark">%3$s</a></span>',
-           _x( 'Posté le', 'Used before publish date.', 'lebourdonnement' ),
-           esc_url( get_permalink() ),
-           $time_string
-       );
-   }
-   */
-
    if ( 'post' == get_post_type() ) {
        if ( is_singular() || is_multi_author() ) {
            printf( '<span class="byline"><span class="author vcard"><span class="screen-reader-text">%1$s </span><a class="url fn n" href="%2$s">%3$s</a></span></span>',
@@ -265,6 +242,12 @@ add_filter('mce_buttons_3', 'my_mce_buttons_3');
 
 function my_mce_before_init_insert_formats( $init_array ) {
 	$style_formats = array(
+		array(
+			'title' => 'chapo',
+			'block' => 'p',
+			'classes' => 'chapo',
+			'wrapper' => false,
+		),
 		array(
 			'title' => 'section',
 			'block' => 'section',
