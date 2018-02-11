@@ -78,7 +78,7 @@ h2 > a:hover {
     font-size: 100%;
 }
 
-.chapo{
+#page .chapo{
     font-weight: bold;
     margin-bottom: 2rem;
 }
